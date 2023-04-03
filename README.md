@@ -10,6 +10,8 @@ https://d1gjzqq39e70nl.cloudfront.net/
 
 # BE PR link
 
+https://github.com/anastasiya-antonenko/shop-nodejs-backend/pull/1
+
 # Swagger
 
 https://agills86v9.execute-api.us-east-1.amazonaws.com/swagger
