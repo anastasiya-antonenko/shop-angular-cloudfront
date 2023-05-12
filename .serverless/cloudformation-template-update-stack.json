@@ -74,7 +74,7 @@
     "WebAppS3Bucket": {
       "Type": "AWS::S3::Bucket",
       "Properties": {
-        "BucketName": "shop-cats-cloud",
+        "BucketName": "shop-cats-cloud-front",
         "AccessControl": "PublicRead",
         "WebsiteConfiguration": {
           "IndexDocument": "index.html",
@@ -94,7 +94,7 @@
               "Sid": "AllowCloudFrontAccessIdentity",
               "Effect": "Allow",
               "Action": "s3:GetObject",
-              "Resource": "arn:aws:s3:::shop-cats-cloud/*",
+              "Resource": "arn:aws:s3:::shop-cats-cloud-front/*",
               "Principal": {
                 "AWS": {
                   "Fn::Join": [
@@ -130,7 +130,7 @@
               "DomainName": {
                 "Fn::GetAtt": ["WebAppS3Bucket", "RegionalDomainName"]
               },
-              "Id": "myS3Origin",
+              "Id": "myS3Origin1",
               "S3OriginConfig": {
                 "OriginAccessIdentity": {
                   "Fn::Sub": "origin-access-identity/cloudfront/${OriginAccessIdentity}"
@@ -164,7 +164,7 @@
                 "Forward": "none"
               }
             },
-            "TargetOriginId": "myS3Origin",
+            "TargetOriginId": "myS3Origin1",
             "ViewerProtocolPolicy": "redirect-to-https",
             "Compress": true,
             "DefaultTTL": 0
@@ -182,7 +182,7 @@
         "Ref": "ServerlessDeploymentBucket"
       },
       "Export": {
-        "Name": "sls-shop-cats-cloud-dev-ServerlessDeploymentBucketName"
+        "Name": "sls-shop-cats-cloud-front-dev-ServerlessDeploymentBucketName"
       }
     },
     "WebAppS3BucketOutput": {
