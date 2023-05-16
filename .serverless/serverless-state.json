@@ -1,8 +1,8 @@
 {
   "service": {
-    "service": "shop-cats-cloud",
+    "service": "shop-cats-cloud-front",
     "serviceObject": {
-      "name": "shop-cats-cloud"
+      "name": "shop-cats-cloud-front"
     },
     "provider": {
       "name": "aws",
@@ -86,7 +86,7 @@
           "WebAppS3Bucket": {
             "Type": "AWS::S3::Bucket",
             "Properties": {
-              "BucketName": "shop-cats-cloud",
+              "BucketName": "shop-cats-cloud-front",
               "AccessControl": "PublicRead",
               "WebsiteConfiguration": {
                 "IndexDocument": "index.html",
@@ -106,7 +106,7 @@
                     "Sid": "AllowCloudFrontAccessIdentity",
                     "Effect": "Allow",
                     "Action": "s3:GetObject",
-                    "Resource": "arn:aws:s3:::shop-cats-cloud/*",
+                    "Resource": "arn:aws:s3:::shop-cats-cloud-front/*",
                     "Principal": {
                       "AWS": {
                         "Fn::Join": [
@@ -140,9 +140,12 @@
                 "Origins": [
                   {
                     "DomainName": {
-                      "Fn::GetAtt": ["WebAppS3Bucket", "RegionalDomainName"]
+                      "Fn::GetAtt": [
+                        "WebAppS3Bucket",
+                        "RegionalDomainName"
+                      ]
                     },
-                    "Id": "myS3Origin",
+                    "Id": "myS3Origin1",
                     "S3OriginConfig": {
                       "OriginAccessIdentity": {
                         "Fn::Sub": "origin-access-identity/cloudfront/${OriginAccessIdentity}"
@@ -162,8 +165,16 @@
                   }
                 ],
                 "DefaultCacheBehavior": {
-                  "AllowedMethods": ["GET", "HEAD", "OPTIONS"],
-                  "CachedMethods": ["GET", "HEAD", "OPTIONS"],
+                  "AllowedMethods": [
+                    "GET",
+                    "HEAD",
+                    "OPTIONS"
+                  ],
+                  "CachedMethods": [
+                    "GET",
+                    "HEAD",
+                    "OPTIONS"
+                  ],
                   "ForwardedValues": {
                     "Headers": [
                       "Access-Control-Request-Headers",
@@ -176,7 +187,7 @@
                       "Forward": "none"
                     }
                   },
-                  "TargetOriginId": "myS3Origin",
+                  "TargetOriginId": "myS3Origin1",
                   "ViewerProtocolPolicy": "redirect-to-https",
                   "Compress": true,
                   "DefaultTTL": 0
@@ -194,7 +205,7 @@
               "Ref": "ServerlessDeploymentBucket"
             },
             "Export": {
-              "Name": "sls-shop-cats-cloud-dev-ServerlessDeploymentBucketName"
+              "Name": "sls-shop-cats-cloud-front-dev-ServerlessDeploymentBucketName"
             }
           },
           "WebAppS3BucketOutput": {
@@ -204,7 +215,10 @@
           },
           "WebAppCloudFrontDistributionOutput": {
             "Value": {
-              "Fn::GetAtt": ["WebAppCloudFrontDistribution", "DomainName"]
+              "Fn::GetAtt": [
+                "WebAppCloudFrontDistribution",
+                "DomainName"
+              ]
             }
           }
         }
@@ -294,13 +308,15 @@
     },
     "custom": {
       "client": {
-        "bucketName": "shop-cats-cloud",
+        "bucketName": "shop-cats-cloud-front",
         "distributionFolder": "dist/app"
       },
-      "s3BucketName": "shop-cats-cloud",
+      "s3BucketName": "shop-cats-cloud-front",
       "s3LocalPath": "dist/app/",
       "serverless-s3-cleaner": {
-        "buckets": ["shop-cats-cloud"]
+        "buckets": [
+          "shop-cats-cloud-front"
+        ]
       }
     },
     "plugins": [
@@ -315,7 +331,7 @@
         "WebAppS3Bucket": {
           "Type": "AWS::S3::Bucket",
           "Properties": {
-            "BucketName": "shop-cats-cloud",
+            "BucketName": "shop-cats-cloud-front",
             "AccessControl": "PublicRead",
             "WebsiteConfiguration": {
               "IndexDocument": "index.html",
@@ -335,7 +351,7 @@
                   "Sid": "AllowCloudFrontAccessIdentity",
                   "Effect": "Allow",
                   "Action": "s3:GetObject",
-                  "Resource": "arn:aws:s3:::shop-cats-cloud/*",
+                  "Resource": "arn:aws:s3:::shop-cats-cloud-front/*",
                   "Principal": {
                     "AWS": {
                       "Fn::Join": [
@@ -369,9 +385,12 @@
               "Origins": [
                 {
                   "DomainName": {
-                    "Fn::GetAtt": ["WebAppS3Bucket", "RegionalDomainName"]
+                    "Fn::GetAtt": [
+                      "WebAppS3Bucket",
+                      "RegionalDomainName"
+                    ]
                   },
-                  "Id": "myS3Origin",
+                  "Id": "myS3Origin1",
                   "S3OriginConfig": {
                     "OriginAccessIdentity": {
                       "Fn::Sub": "origin-access-identity/cloudfront/${OriginAccessIdentity}"
@@ -391,8 +410,16 @@
                 }
               ],
               "DefaultCacheBehavior": {
-                "AllowedMethods": ["GET", "HEAD", "OPTIONS"],
-                "CachedMethods": ["GET", "HEAD", "OPTIONS"],
+                "AllowedMethods": [
+                  "GET",
+                  "HEAD",
+                  "OPTIONS"
+                ],
+                "CachedMethods": [
+                  "GET",
+                  "HEAD",
+                  "OPTIONS"
+                ],
                 "ForwardedValues": {
                   "Headers": [
                     "Access-Control-Request-Headers",
@@ -405,7 +432,7 @@
                     "Forward": "none"
                   }
                 },
-                "TargetOriginId": "myS3Origin",
+                "TargetOriginId": "myS3Origin1",
                 "ViewerProtocolPolicy": "redirect-to-https",
                 "Compress": true,
                 "DefaultTTL": 0
@@ -425,7 +452,10 @@
         },
         "WebAppCloudFrontDistributionOutput": {
           "Value": {
-            "Fn::GetAtt": ["WebAppCloudFrontDistribution", "DomainName"]
+            "Fn::GetAtt": [
+              "WebAppCloudFrontDistribution",
+              "DomainName"
+            ]
           }
         }
       }
@@ -433,7 +463,7 @@
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yaml",
     "initialServerlessConfig": {
-      "service": "shop-cats-cloud",
+      "service": "shop-cats-cloud-front",
       "frameworkVersion": "3",
       "provider": {
         "$ref": "$[\"service\"][\"provider\"]"
@@ -452,7 +482,7 @@
     "isDashboardMonitoringPreconfigured": false
   },
   "package": {
-    "artifactDirectoryName": "serverless/shop-cats-cloud/dev/1680539186269-2023-04-03T16:26:26.269Z",
+    "artifactDirectoryName": "serverless/shop-cats-cloud-front/dev/1684239568584-2023-05-16T12:19:28.584Z",
     "artifact": ""
   }
 }
