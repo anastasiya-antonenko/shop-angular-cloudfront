@@ -128,7 +128,10 @@
           "Origins": [
             {
               "DomainName": {
-                "Fn::GetAtt": ["WebAppS3Bucket", "RegionalDomainName"]
+                "Fn::GetAtt": [
+                  "WebAppS3Bucket",
+                  "RegionalDomainName"
+                ]
               },
               "Id": "myS3Origin1",
               "S3OriginConfig": {
@@ -150,8 +153,16 @@
             }
           ],
           "DefaultCacheBehavior": {
-            "AllowedMethods": ["GET", "HEAD", "OPTIONS"],
-            "CachedMethods": ["GET", "HEAD", "OPTIONS"],
+            "AllowedMethods": [
+              "GET",
+              "HEAD",
+              "OPTIONS"
+            ],
+            "CachedMethods": [
+              "GET",
+              "HEAD",
+              "OPTIONS"
+            ],
             "ForwardedValues": {
               "Headers": [
                 "Access-Control-Request-Headers",
@@ -192,7 +203,10 @@
     },
     "WebAppCloudFrontDistributionOutput": {
       "Value": {
-        "Fn::GetAtt": ["WebAppCloudFrontDistribution", "DomainName"]
+        "Fn::GetAtt": [
+          "WebAppCloudFrontDistribution",
+          "DomainName"
+        ]
       }
     }
   }
